@@ -12,14 +12,14 @@ using std::string;
 // OUTPUT: HH:MM:SS
 // REMOVE: [[maybe_unused]] once you define the function
 string Format::ElapsedTime(long seconds) { 
-    std::vector<int> tf {216000,3600,60};
-    std::vector<int> t {};
+    std::vector<int> tf {3600,60,1};    //denominator values in seconds for hours, minutes, and seconds
+    std::vector<int> t {};    //vector to store integer values for hour, minutes and seconds
     long sec = seconds;
-    while (sec > 0){
-        for (int i = 0; i < tf.size(); i++){
-            t[i] = floor(sec/tf[i]);
-        }
-        string tim = std::to_string(t[0]) + ":" + std::to_string(t[1]) + ":" + std::to_string(t[2]);
-        return tim;
+    while (sec > 0){                          
+        for (int i = 0; i <= 2; i++){             //parse through the tf vector
+            t[i] = int(floor(sec/tf[i]));         //round down the hour/minute/second value and convert double to an integer
+            sec -= t[i]*tf[i];                    //remove calculate time placement value from sec
+        }        
     }
+return std::to_string(t[0]) + ":" + std::to_string(t[1]) + ":" + std::to_string(t[2]); //return HH:MM:SS values in string format
 }
